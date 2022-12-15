@@ -110,7 +110,10 @@ source_group("Midi Source Files" FILES ${src_files_midi})
 source_group("Resources" FILES ${resource_files})
 
 include_directories(../Engine/src)
-include_directories(${SDL2_INCLUDE_DIR})
+
+if(NOT HUNTER_ENABLED)
+	include_directories(${SDL2_INCLUDE_DIR})
+endif()
 
 add_executable(${project_name} 
 	${src_files_audiolib_headers}
@@ -124,6 +127,6 @@ add_executable(${project_name}
 )
 
 set_target_properties(${project_name} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
-target_link_libraries(${project_name} PRIVATE Engine ${SDL2_ALL_LIBRARIES} ${socket_library})
+target_link_libraries(${project_name} PRIVATE Engine ${socket_library})
 set_target_properties(${project_name} PROPERTIES OUTPUT_NAME "ChocoDuke3D${project_suffix}")
 set_target_properties(${project_name} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")

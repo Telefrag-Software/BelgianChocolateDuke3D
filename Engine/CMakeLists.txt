@@ -27,7 +27,11 @@ set(src_files
 	src/win32_compat.h
 )
 
-include_directories(${SDL2_INCLUDE_DIR})
+if(NOT HUNTER_ENABLED)
+	include_directories(${SDL2_INCLUDE_DIR})
+endif()
+
 add_library(${project_name} STATIC ${src_files})
+target_link_libraries(${project_name} PUBLIC ${SDL2_ALL_LIBRARIES})
 #set_target_properties(${project_name} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 set_target_properties(${project_name} PROPERTIES OUTPUT_NAME "Engine${project_suffix}")
